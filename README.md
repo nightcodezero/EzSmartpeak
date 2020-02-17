@@ -1,7 +1,7 @@
 # EzSmartpeak
-EzSmartpeak is an Android library that simplifies the process of implement Smartpeak Terminal Library.
+EzSmartpeak is an Android library that simplifies the process of implement Smartpeak Terminal Library. :tada::tada::tada:
 
-Currently supported features:
+:rocket: Currently supported features:
 * Print receipt
 * Scan QRCode/Barcode
 * Play beep sound
@@ -9,7 +9,7 @@ Currently supported features:
 Usage
 -----
 
-### Dependency
+### :pushpin: Dependency
 
 Step 1. Add the JitPack repository to your build file. Add it in your root build.gradle at the end of repositories:
 
@@ -28,16 +28,16 @@ dependencies {
 }
 ```
 
-How to use it
+How to use it :question:
 -----
-### Set up
+### :pushpin: Set up
 Pass the application context to EzSmartpeak
 ```java
 EzSmartpeak.getInstance(this);
 ```
 
-### Usage
-#### Set Print Text
+### :pushpin: Usage
+#### :balloon: Set Print Text
 ```java
 EzSmartpeak.PrintText("Test print", 2, EzSmartpeak.TEXT_CENTER);
 ```
@@ -51,7 +51,7 @@ EzSmartpeak.PrintText("Test print", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT
 | TEXT_CENTER | sets the text to centre |
 | TEXT_LEFT | sets the text to left 
 | TEXT_RIGHT | sets the text to right |
-#### Templates
+#### :balloon: Templates
 Add empty space between texts
 ```java
 EzSmartpeak.EmptySpace()
@@ -60,11 +60,11 @@ Add line split
 ```java
 EzSmartpeak.LineSplit() // Result : =======================
 ```
-#### Set Print Logo
+#### :balloon: Set Print Logo
 ```java
 EzSmartpeak.PrintLogo("jpg", EzSmartpeak.TEXT_CENTER))
 ```
-#### Set Print Barcode or QRCode
+#### :balloon: Set Print Barcode or QRCode
 ```java
 EzSmartpeak.PrintDimensionObject(EzSmartpeak.DIMENSION_TWO, "123131231", 3, EzSmartpeak.TEXT_CENTER, 1);
 ```
@@ -72,7 +72,7 @@ EzSmartpeak.PrintDimensionObject(EzSmartpeak.DIMENSION_TWO, "123131231", 3, EzSm
 | ----------| --- |
 | DIMENSION_ONE | to print barcode |
 | DIMENSION_TWO | to print qrcode |
-#### Set Print Callback - MUST IMPLEMENT
+#### :balloon: Set Print Callback - MUST IMPLEMENT
 ``printValues`` must be a JSON Array
 ```java
 EzSmartpeak.getPrint(printValues, new EzSmartpeak.PrinterCallback() {
@@ -111,7 +111,7 @@ EzSmartpeak.getPrint(printValues, R.drawable.my_logo, new EzSmartpeak.PrinterCal
     }
 });
 ```
-#### Scan QRCode or Barcode
+#### :balloon: Scan QRCode or Barcode
 ```java
 EzSmartpeak.getScanner(new EzSmartpeak.ScanCallback() {
     @Override
@@ -141,7 +141,7 @@ EzSmartpeak.getScanner(30, new EzSmartpeak.ScanCallback() {
     }
 });
 ```
-#### Beep Sound
+#### :balloon: Beep Sound
 ```java
 EzSmartpeak.getBeeper();
 ```
@@ -176,7 +176,7 @@ EzSmartpeak.getPrint(printValues, R.drawable.my_logo, new EzSmartpeak.PrinterCal
 });
 
 ```
-### Author
+### :octocat: Author
 Maintained by [Fauzan](https://github.com/muhdfauzan93)
 
 License
