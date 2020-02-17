@@ -145,7 +145,7 @@ EzSmartpeak.getScanner(30, new EzSmartpeak.ScanCallback() {
 ```java
 EzSmartpeak.getBeeper();
 ```
-Code Sample - Print Receipt
+Code Sample - Print Receipt :printer:
 -----
 ```java
 JSONArray printValues = new JSONArray();
