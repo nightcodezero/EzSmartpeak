@@ -1,6 +1,9 @@
 # EzSmartpeak
 EzSmartpeak is an Android library that simplifies the process of implement Smartpeak Terminal Library.
-
+Currently supported features:
+* Print receipt
+* Scan QRCode/Barcode
+* Play beep sound
 Usage
 -----
 
@@ -34,11 +37,11 @@ EzSmartpeak.getInstance(this);
 ### Usage
 #### Set Print Text
 ```java
-EzSmartpeak.PrintText("MobilityOne Sdn Bhd", 2, EzSmartpeak.TEXT_CENTER);
+EzSmartpeak.PrintText("Test print", 2, EzSmartpeak.TEXT_CENTER);
 ```
 with text styles
 ```java
-EzSmartpeak.PrintText("MobilityOne Sdn Bhd", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_BOLD);
+EzSmartpeak.PrintText("Test print", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_BOLD);
 ```
 | Attribute | Use |
 | ----------| --- |
