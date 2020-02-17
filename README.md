@@ -1,4 +1,4 @@
-# EzSmartpeak
+# EzSmartpeak :crystal_ball:
 EzSmartpeak is an Android library that simplifies the process of implement Smartpeak Terminal Library. :tada::tada::tada:
 
 :rocket: Currently supported features:
