@@ -1,7 +1,7 @@
 # EzSmartpeak :crystal_ball:
-EzSmartpeak is an Android library that simplifies the process of implement Smartpeak Terminal Library. :tada::tada::tada:
+EzSmartpeak is an Android library that simplifies the process of implement Smartpeak Terminal Library.:rocket: 
 
-:rocket: Currently supported features:
+Currently supported features: :tada::tada::tada:
 * Print receipt
 * Scan QRCode/Barcode
 * Play beep sound
@@ -166,12 +166,12 @@ EzSmartpeak.getPrint(printValues, R.drawable.my_logo, new EzSmartpeak.PrinterCal
 
     @Override
     public void onPrintFinish() {
-        Toast.makeText(getApplicationContext(), "Print success", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Print successful", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPrintError(String errMsg) {
-        Toast.makeText(getApplicationContext(), "Print error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Whoops got error : " + errMsg, Toast.LENGTH_SHORT).show();
     }
 });
 
