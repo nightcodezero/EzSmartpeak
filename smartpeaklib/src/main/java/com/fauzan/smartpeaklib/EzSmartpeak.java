@@ -2,10 +2,12 @@ package com.fauzan.smartpeaklib;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.basewin.aidl.OnBarcodeCallBack;
 import com.basewin.aidl.OnPrinterListener;
 import com.basewin.services.PrinterBinder;
 import com.basewin.services.ServiceManager;
@@ -14,7 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SmartpeakPrint {
+public class EzSmartpeak {
     private Context mContext;
 
     public static final String TEXT_CENTER = "center";
@@ -27,13 +29,13 @@ public class SmartpeakPrint {
     public static final String DIMENSION_TWO = "two-dimension";
 
 
-    private static volatile SmartpeakPrint smartPeakPrintInstance;
+    private static volatile EzSmartpeak smartPeakInstanceEz;
 
     //private constructor.
-    private SmartpeakPrint(Context context) {
+    private EzSmartpeak(Context context) {
 
         //Prevent form the reflection api.
-        if (smartPeakPrintInstance != null) {
+        if (smartPeakInstanceEz != null) {
             throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
         }
 
@@ -42,40 +44,41 @@ public class SmartpeakPrint {
         this.mContext = context;
     }
 
-    public static SmartpeakPrint getInstance(Context context) {
+    public static EzSmartpeak getInstance(Context context) {
         //Double check locking pattern
-        if (smartPeakPrintInstance == null) { //Check for the first time
+        if (smartPeakInstanceEz == null) { //Check for the first time
 
-            synchronized (SmartpeakPrint.class) {   //Check for the second time.
+            synchronized (EzSmartpeak.class) {   //Check for the second time.
                 //if there is no instance available... create new one
-                if (smartPeakPrintInstance == null)
-                    smartPeakPrintInstance = new SmartpeakPrint(context);
+                if (smartPeakInstanceEz == null)
+                    smartPeakInstanceEz = new EzSmartpeak(context);
             }
         }
 
-        return smartPeakPrintInstance;
+        return smartPeakInstanceEz;
     }
 
-    public static void print(JSONArray jsonArray, PrinterCallback printerCallback) {
+    public static void getPrint(JSONArray jsonArray, PrinterCallback printerCallback) {
         try {
-            ServiceManager.getInstence().getPrinter().printBottomFeedLine(3);
+//            ServiceManager.getInstence().getPrinter().printBottomFeedLine(3);
             ServiceManager.getInstence().getPrinter().print(new JSONObject().put("spos", jsonArray).toString(), null, new PrinterListener(printerCallback));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void print(JSONArray jsonArray, Bitmap[] bitmap, PrinterCallback printerCallback) {
+    public static void getPrint(JSONArray jsonArray, int image, PrinterCallback printerCallback) {
         try {
-            ServiceManager.getInstence().getPrinter().printBottomFeedLine(3);
-            ServiceManager.getInstence().getPrinter().print(new JSONObject().put("spos", jsonArray).toString(), bitmap, new PrinterListener(printerCallback));
+            Bitmap qr = BitmapFactory.decodeResource(smartPeakInstanceEz.mContext.getResources(), image);
+            Bitmap[] bitmaps = new Bitmap[]{qr};
+            ServiceManager.getInstence().getPrinter().print(new JSONObject().put("spos", jsonArray).toString(), bitmaps, new PrinterListener(printerCallback));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static JSONObject LineSplit() {
-        return PrintText("------------------------------------------------", 2, SmartpeakPrint.TEXT_CENTER, SmartpeakPrint.TEXT_NORMAL);
+        return PrintText("------------------------------------------------", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_NORMAL);
     }
 
     public static JSONObject PrintLogo(String contentType, String position) {
@@ -107,7 +110,7 @@ public class SmartpeakPrint {
     }
 
     public static JSONObject EmptySpace() {
-        return PrintText("                        ", 2, SmartpeakPrint.TEXT_CENTER, SmartpeakPrint.TEXT_BOLD);
+        return PrintText("                        ", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_BOLD);
     }
 
     public static JSONObject PrintText(String text, int size, String position) {
@@ -154,7 +157,7 @@ public class SmartpeakPrint {
 
         @Override
         public void onStart() {
-            Log.d(TAG, "Start print");
+            Log.d(TAG, "Start getPrint");
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
@@ -165,7 +168,7 @@ public class SmartpeakPrint {
 
         @Override
         public void onFinish() {
-            Log.d(TAG, "SmartpeakPrint success");
+            Log.d(TAG, "EzSmartpeak success");
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
@@ -176,7 +179,7 @@ public class SmartpeakPrint {
 
         @Override
         public void onError(int errorCode, String detail) {
-            Log.e(TAG, "SmartpeakPrint error: " + "error code = " + errorCode + " detail = " + detail);
+            Log.e(TAG, "EzSmartpeak error: " + "error code = " + errorCode + " detail = " + detail);
 
             if (errorCode == PrinterBinder.PRINTER_ERROR_NO_PAPER) {
                 Log.e(TAG, "onError: paper runs out during printing");
@@ -206,6 +209,83 @@ public class SmartpeakPrint {
                 });
             }
         }
+    }
+
+    // Scan QR Code
+    public static void getScanner(final ScanCallback scanCallback) {
+        try {
+            ServiceManager.getInstence().getScan().startScan(10, new OnBarcodeCallBack() {
+                @Override
+                public void onScanResult(String s) {
+                    scanCallback.onScanResult(s);
+                }
+
+                @Override
+                public void onFinish() {
+                    scanCallback.onFinish();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getScanner(int timeout, final ScanCallback scanCallback) {
+        try {
+            ServiceManager.getInstence().getScan().startScan(timeout, new OnBarcodeCallBack() {
+                @Override
+                public void onScanResult(String s) {
+                    scanCallback.onScanResult(s);
+                }
+
+                @Override
+                public void onFinish() {
+                    scanCallback.onFinish();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Beep sound
+    // default value : time = 100ms; freq = 500;voice = 1
+    public static void getBeeper(){
+        try {
+            ServiceManager.getInstence().getBeeper().beep(100, 500, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getBeeper(int time){
+        try {
+            ServiceManager.getInstence().getBeeper().beep(time, 500, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getBeeper(int time, int freq){
+        try {
+            ServiceManager.getInstence().getBeeper().beep(time, freq, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getBeeper(int time, int freq, int voice){
+        try {
+            ServiceManager.getInstence().getBeeper().beep(time, freq, voice);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public interface ScanCallback {
+        void onScanResult(String s);
+
+        void onFinish();
     }
 
     public interface PrinterCallback {
