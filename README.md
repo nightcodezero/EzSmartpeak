@@ -28,7 +28,7 @@ dependencies {
 }
 ```
 
-How to use it :question:
+How to use it :man_shrugging:
 -----
 ### :pushpin: Set up
 Pass the application context to EzSmartpeak
