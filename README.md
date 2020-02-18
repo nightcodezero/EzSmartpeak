@@ -63,7 +63,7 @@ EzSmartpeak.LineSplit() // Result : =======================
 ```
 #### :balloon: Set Print Logo
 ```java
-EzSmartpeak.PrintLogo("jpg", EzSmartpeak.TEXT_CENTER))
+EzSmartpeak.PrintLogo("jpg", Position.CENTER))
 ```
 #### :balloon: Set Print Barcode or QRCode
 ```java
