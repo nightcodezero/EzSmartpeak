@@ -179,23 +179,13 @@ public class EzSmartpeak {
         @Override
         public void onStart() {
             Log.d(TAG, "Print start");
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    printerCallback.onPrintStart();
-                }
-            });
+            printerCallback.onPrintStart();
         }
 
         @Override
         public void onFinish() {
-            Log.d(TAG, "Print success");
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    printerCallback.onPrintFinish();
-                }
-            });
+            Log.d(TAG, "Print finish");
+            printerCallback.onPrintFinish();
         }
 
         @Override
@@ -204,31 +194,15 @@ public class EzSmartpeak {
 
             if (errorCode == PrinterBinder.PRINTER_ERROR_NO_PAPER) {
                 Log.e(TAG, "onError: paper runs out during printing");
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        printerCallback.onPrintError("Paper runs out during printing");
-                    }
-                });
             }
             if (errorCode == PrinterBinder.PRINTER_ERROR_OVER_HEAT) {
                 Log.e(TAG, "onError: over heat during printing");
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        printerCallback.onPrintError("Over heat during printing");
-                    }
-                });
             }
             if (errorCode == PrinterBinder.PRINTER_ERROR_OTHER) {
                 Log.e(TAG, "onError: other error happen during printing");
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        printerCallback.onPrintError("Other error happen during printing");
-                    }
-                });
             }
+
+            printerCallback.onPrintError(detail);
         }
     }
 

@@ -56,17 +56,17 @@ public class MainActivity extends AppCompatActivity {
                 EzSmartpeak.getPrint(printValues, R.drawable.logo, new EzSmartpeak.PrinterCallback() {
                     @Override
                     public void onPrintStart() {
-                        Toast.makeText(getApplicationContext(), "Start getPrint", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Start print");
                     }
 
                     @Override
                     public void onPrintFinish() {
-                        Toast.makeText(getApplicationContext(), "Print success", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "Print success");
                     }
 
                     @Override
                     public void onPrintError(String errMsg) {
-                        Toast.makeText(getApplicationContext(), "Print error", Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "onPrintError: "+errMsg );
                     }
                 });
 
