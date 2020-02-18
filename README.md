@@ -1,5 +1,5 @@
 # EzSmartpeak :crystal_ball:
-EzSmartpeak is an Android library that simplifies the process of implement Smartpeak Terminal Library.:rocket: 
+EzSmartpeak is an Android library that simplifies the process of implementation Smartpeak Terminal Library.:rocket: 
 
 Currently supported features: :tada::tada::tada:
 * Print receipt
@@ -28,7 +28,7 @@ dependencies {
 }
 ```
 
-How to use it :question:
+How to use it :man_shrugging:
 -----
 ### :pushpin: Set up
 Pass the application context to EzSmartpeak
@@ -145,7 +145,7 @@ EzSmartpeak.getScanner(30, new EzSmartpeak.ScanCallback() {
 ```java
 EzSmartpeak.getBeeper();
 ```
-Code Sample - Print Receipt
+Code Sample - Print Receipt :printer:
 -----
 ```java
 JSONArray printValues = new JSONArray();
