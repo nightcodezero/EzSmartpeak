@@ -24,7 +24,7 @@ allprojects {
 Step 2. Add the dependency
 ```java
 dependencies {
-        implementation 'com.github.muhdfauzan93:EzSmartpeak:<latest version>' // v1.0.0
+        implementation 'com.github.muhdfauzan93:EzSmartpeak:<latest version>' // v1.0.1
 }
 ```
 
@@ -39,18 +39,19 @@ EzSmartpeak.getInstance(this);
 ### :pushpin: Usage
 #### :balloon: Set Print Text
 ```java
-EzSmartpeak.PrintText("Test print", 2, EzSmartpeak.TEXT_CENTER);
+EzSmartpeak.PrintText("Test print", 2, Position.CENTER));
 ```
 with text styles
 ```java
-EzSmartpeak.PrintText("Test print", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_BOLD);
+EzSmartpeak.PrintText("Payment", 2, Position.CENTER, TextStyle.BOLD)
 ```
 | Attribute | Use |
 | ----------| --- |
-| TEXT_BOLD | sets the text bold |
-| TEXT_CENTER | sets the text to centre |
-| TEXT_LEFT | sets the text to left 
-| TEXT_RIGHT | sets the text to right |
+| BOLD | sets the text bold |
+| ITALIC | sets the text italic |
+| CENTER | sets the contain to centre |
+| LEFT | sets the contain to left 
+| RIGHT | sets the contain to right |
 #### :balloon: Templates
 Add empty space between texts
 ```java
@@ -66,7 +67,7 @@ EzSmartpeak.PrintLogo("jpg", EzSmartpeak.TEXT_CENTER))
 ```
 #### :balloon: Set Print Barcode or QRCode
 ```java
-EzSmartpeak.PrintDimensionObject(EzSmartpeak.DIMENSION_TWO, "123131231", 3, EzSmartpeak.TEXT_CENTER, 1);
+EzSmartpeak.PrintDimensionObject(Dimension.TWO, "100000000291339", 3, Position.CENTER, 1)); // print qrcode
 ```
 | Attribute | Use |
 | ----------| --- |
@@ -78,7 +79,7 @@ EzSmartpeak.PrintDimensionObject(EzSmartpeak.DIMENSION_TWO, "123131231", 3, EzSm
 EzSmartpeak.getPrint(printValues, new EzSmartpeak.PrinterCallback() {
     @Override
     public void onPrintStart() {
-        Toast.makeText(getApplicationContext(), "Start print", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Print start", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -97,7 +98,7 @@ with logo
 EzSmartpeak.getPrint(printValues, R.drawable.my_logo, new EzSmartpeak.PrinterCallback() {
     @Override
     public void onPrintStart() {
-        Toast.makeText(getApplicationContext(), "Start print", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Print start", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -149,19 +150,19 @@ Code Sample - Print Receipt :printer:
 -----
 ```java
 JSONArray printValues = new JSONArray();
-printValues.put(EzSmartpeak.PrintText("DATE/TIME     : " + "27/11/2019 08:46:53 AM", 2, EzSmartpeak.TEXT_LEFT));
+printValues.put(EzSmartpeak.PrintText("DATE/TIME     : " + "27/11/2019 08:46:53 AM", 2, Position.LEFT));
 printValues.put(EzSmartpeak.EmptySpace());
-printValues.put(EzSmartpeak.PrintText("TEST PAYMENT", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_BOLD));
+printValues.put(EzSmartpeak.PrintText("TEST PAYMENT", 2, Position.CENTER, TextStyle.BOLD));
 printValues.put(EzSmartpeak.LineSplit());
-printValues.put(EzSmartpeak.PrintText("TOTAL:         RM 1.00 ", 2, EzSmartpeak.TEXT_LEFT, EzSmartpeak.TEXT_BOLD));
+printValues.put(EzSmartpeak.PrintText("TOTAL:         RM 1.00 ", 2, Position.LEFT, TextStyle.BOLD));
 printValues.put(EzSmartpeak.LineSplit());
-printValues.put(EzSmartpeak.PrintDimensionObject(EzSmartpeak.DIMENSION_TWO, "12312332312", 3, EzSmartpeak.TEXT_CENTER, 1)); // Set qrcode
-printValues.put(EzSmartpeak.PrintLogo("jpg", EzSmartpeak.TEXT_CENTER)); // set logo
+printValues.put(EzSmartpeak.PrintDimensionObject(Dimension.TWO, "12312332312", 3, Position.CENTER, 1)); // print qrcode
+printValues.put(EzSmartpeak.PrintLogo("jpg", Position.CENTER)); // set logo
 // Set callback
 EzSmartpeak.getPrint(printValues, R.drawable.my_logo, new EzSmartpeak.PrinterCallback() {
     @Override
     public void onPrintStart() {
-        Toast.makeText(getApplicationContext(), "Start print", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Print start", Toast.LENGTH_SHORT).show();
     }
 
     @Override
