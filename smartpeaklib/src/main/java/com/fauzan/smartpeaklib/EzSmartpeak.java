@@ -179,30 +179,43 @@ public class EzSmartpeak {
         @Override
         public void onStart() {
             Log.d(TAG, "Print start");
-            printerCallback.onPrintStart();
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    printerCallback.onPrintStart();
+                }
+            });
         }
 
         @Override
         public void onFinish() {
             Log.d(TAG, "Print finish");
-            printerCallback.onPrintFinish();
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    printerCallback.onPrintFinish();
+                }
+            });
         }
 
         @Override
-        public void onError(int errorCode, String detail) {
+        public void onError(final int errorCode, final String detail) {
             Log.e(TAG, "Print error: " + "error code = " + errorCode + " detail = " + detail);
 
-            if (errorCode == PrinterBinder.PRINTER_ERROR_NO_PAPER) {
-                Log.e(TAG, "onError: paper runs out during printing");
-            }
-            if (errorCode == PrinterBinder.PRINTER_ERROR_OVER_HEAT) {
-                Log.e(TAG, "onError: over heat during printing");
-            }
-            if (errorCode == PrinterBinder.PRINTER_ERROR_OTHER) {
-                Log.e(TAG, "onError: other error happen during printing");
-            }
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    if (errorCode == PrinterBinder.PRINTER_ERROR_NO_PAPER) {
+                        printerCallback.onPrintError("Paper runs out during printing");
+                    } else if (errorCode == PrinterBinder.PRINTER_ERROR_OVER_HEAT) {
+                        printerCallback.onPrintError("Over heat during printing");
+                    }
+                    else if (errorCode == PrinterBinder.PRINTER_ERROR_OTHER) {
+                        printerCallback.onPrintError("Other error happen during printing");
+                    }
 
-            printerCallback.onPrintError(detail);
+                }
+            });
         }
     }
 
