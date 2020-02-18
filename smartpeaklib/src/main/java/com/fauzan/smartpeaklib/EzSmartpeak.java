@@ -17,18 +17,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 public class EzSmartpeak {
     private Context mContext;
-
-    public static final String TEXT_CENTER = "center";
-    public static final String TEXT_LEFT = "left";
-    public static final String TEXT_RIGHT = "right";
-    public static final String TEXT_BOLD = "1";
-    public static final String TEXT_NORMAL = "0";
-
-    public static final String DIMENSION_ONE = "one-dimension";
-    public static final String DIMENSION_TWO = "two-dimension";
-
 
     private static volatile EzSmartpeak smartPeakInstanceEz;
 
@@ -82,30 +73,40 @@ public class EzSmartpeak {
     }
 
     public static JSONObject LineSplit() {
-        return PrintText("--------------------------------", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_BOLD);
+        return PrintText("--------------------------------", 2, Position.CENTER, TextStyle.BOLD);
     }
 
-    public static JSONObject PrintLogo(String contentType, String position) {
-        JSONObject logo = new JSONObject();
-        try {
-            logo.put("content-type", contentType);
-            logo.put("position", position);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return logo;
-    }
-
-    public static JSONObject PrintDimensionObject(String contentType, String text, int size, String position, int height) {
-        if (!contentType.equals(DIMENSION_ONE) && !contentType.equals(DIMENSION_TWO))
-            throw new RuntimeException("Invalid content type");
-
+    public static JSONObject PrintLogo(String contentType, Position position) {
         JSONObject json = new JSONObject();
         try {
             json.put("content-type", contentType);
+            if (position == Position.CENTER)
+                json.put("position", "center");
+            else if (position == Position.LEFT)
+                json.put("position", "left");
+            else
+                json.put("position", "right");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    public static JSONObject PrintDimensionObject(Dimension dimension, String text, int size, Position position, int height) {
+        JSONObject json = new JSONObject();
+        try {
+            if (dimension == Dimension.ONE)
+                json.put("content-type", "one-dimension");
+            else
+                json.put("content-type", "two-dimension");
             json.put("content", text);
             json.put("size", size);
-            json.put("position", position);
+            if (position == Position.CENTER)
+                json.put("position", "center");
+            else if (position == Position.LEFT)
+                json.put("position", "left");
+            else
+                json.put("position", "right");
             json.put("height", height);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,16 +115,21 @@ public class EzSmartpeak {
     }
 
     public static JSONObject EmptySpace() {
-        return PrintText("                        ", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_BOLD);
+        return PrintText("                        ", 2, Position.CENTER, TextStyle.BOLD);
     }
 
-    public static JSONObject PrintText(String text, int size, String position) {
+    public static JSONObject PrintText(String text, int size, Position position) {
         JSONObject json = new JSONObject();
         try {
             json.put("content-type", "txt");
             json.put("content", text);
             json.put("size", size);
-            json.put("position", position);
+            if (position == Position.CENTER)
+                json.put("position", "center");
+            else if (position == Position.LEFT)
+                json.put("position", "left");
+            else
+                json.put("position", "right");
             json.put("offset", "0");
             json.put("bold", "0");
             json.put("italic", "0");
@@ -134,16 +140,27 @@ public class EzSmartpeak {
         return json;
     }
 
-    public static JSONObject PrintText(String text, int size, String position, String textStyle) {
+    public static JSONObject PrintText(String text, int size, Position position, TextStyle textStyle) {
         JSONObject json = new JSONObject();
         try {
             json.put("content-type", "txt");
             json.put("content", text);
             json.put("size", size);
-            json.put("position", position);
+            if (position == Position.CENTER)
+                json.put("position", "center");
+            else if (position == Position.LEFT)
+                json.put("position", "left");
+            else
+                json.put("position", "right");
             json.put("offset", "0");
-            json.put("bold", textStyle);
-            json.put("italic", "0");
+            if (textStyle == TextStyle.BOLD)
+                json.put("bold", "1");
+            else
+                json.put("bold", "0");
+            if (textStyle == TextStyle.ITALIC)
+                json.put("italic", "1");
+            else
+                json.put("italic", "0");
             json.put("height", "-1");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -161,7 +178,7 @@ public class EzSmartpeak {
 
         @Override
         public void onStart() {
-            Log.d(TAG, "Start getPrint");
+            Log.d(TAG, "Print start");
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
@@ -172,7 +189,7 @@ public class EzSmartpeak {
 
         @Override
         public void onFinish() {
-            Log.d(TAG, "EzSmartpeak success");
+            Log.d(TAG, "Print success");
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
@@ -183,7 +200,7 @@ public class EzSmartpeak {
 
         @Override
         public void onError(int errorCode, String detail) {
-            Log.e(TAG, "EzSmartpeak error: " + "error code = " + errorCode + " detail = " + detail);
+            Log.e(TAG, "Print error: " + "error code = " + errorCode + " detail = " + detail);
 
             if (errorCode == PrinterBinder.PRINTER_ERROR_NO_PAPER) {
                 Log.e(TAG, "onError: paper runs out during printing");
@@ -254,7 +271,7 @@ public class EzSmartpeak {
 
     // Beep sound
     // default value : time = 100ms; freq = 500;voice = 1
-    public static void getBeeper(){
+    public static void getBeeper() {
         try {
             ServiceManager.getInstence().getBeeper().beep(100, 500, 1);
         } catch (Exception e) {
@@ -262,7 +279,7 @@ public class EzSmartpeak {
         }
     }
 
-    public static void getBeeper(int time){
+    public static void getBeeper(int time) {
         try {
             ServiceManager.getInstence().getBeeper().beep(time, 500, 1);
         } catch (Exception e) {
@@ -270,7 +287,7 @@ public class EzSmartpeak {
         }
     }
 
-    public static void getBeeper(int time, int freq){
+    public static void getBeeper(int time, int freq) {
         try {
             ServiceManager.getInstence().getBeeper().beep(time, freq, 1);
         } catch (Exception e) {
@@ -278,7 +295,7 @@ public class EzSmartpeak {
         }
     }
 
-    public static void getBeeper(int time, int freq, int voice){
+    public static void getBeeper(int time, int freq, int voice) {
         try {
             ServiceManager.getInstence().getBeeper().beep(time, freq, voice);
         } catch (Exception e) {
