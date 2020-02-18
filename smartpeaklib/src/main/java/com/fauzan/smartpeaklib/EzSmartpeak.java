@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.basewin.aidl.OnBarcodeCallBack;
 import com.basewin.aidl.OnPrinterListener;
+import com.basewin.define.FontsType;
 import com.basewin.services.PrinterBinder;
 import com.basewin.services.ServiceManager;
 
@@ -60,7 +61,8 @@ public class EzSmartpeak {
 
     public static void getPrint(JSONArray jsonArray, PrinterCallback printerCallback) {
         try {
-//            ServiceManager.getInstence().getPrinter().printBottomFeedLine(3);
+            ServiceManager.getInstence().getPrinter().setPrintFont(FontsType.simsun);
+            ServiceManager.getInstence().getPrinter().printBottomFeedLine(3);
             ServiceManager.getInstence().getPrinter().print(new JSONObject().put("spos", jsonArray).toString(), null, new PrinterListener(printerCallback));
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,6 +73,8 @@ public class EzSmartpeak {
         try {
             Bitmap qr = BitmapFactory.decodeResource(smartPeakInstanceEz.mContext.getResources(), image);
             Bitmap[] bitmaps = new Bitmap[]{qr};
+            ServiceManager.getInstence().getPrinter().setPrintFont(FontsType.simsun);
+            ServiceManager.getInstence().getPrinter().printBottomFeedLine(3);
             ServiceManager.getInstence().getPrinter().print(new JSONObject().put("spos", jsonArray).toString(), bitmaps, new PrinterListener(printerCallback));
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +82,7 @@ public class EzSmartpeak {
     }
 
     public static JSONObject LineSplit() {
-        return PrintText("------------------------------------------------", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_NORMAL);
+        return PrintText("--------------------------------", 2, EzSmartpeak.TEXT_CENTER, EzSmartpeak.TEXT_BOLD);
     }
 
     public static JSONObject PrintLogo(String contentType, String position) {
