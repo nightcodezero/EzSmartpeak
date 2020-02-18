@@ -149,6 +149,7 @@ EzSmartpeak.getBeeper();
 Code Sample - Print Receipt :printer:
 -----
 ```java
+EzSmartpeak.getInstance(this);
 JSONArray printValues = new JSONArray();
 printValues.put(EzSmartpeak.PrintText("DATE/TIME     : " + "27/11/2019 08:46:53 AM", 2, Position.LEFT));
 printValues.put(EzSmartpeak.EmptySpace());
