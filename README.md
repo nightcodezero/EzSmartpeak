@@ -37,7 +37,7 @@ EzSmartpeak.getInstance(this);
 ```
 
 ### :pushpin: Usage
-#### :balloon: Set Print Text
+#### :balloon: Print Text
 ```java
 EzSmartpeak.PrintText("Test print", 2, Position.CENTER));
 ```
@@ -61,11 +61,11 @@ Add line split
 ```java
 EzSmartpeak.LineSplit() // Result : =======================
 ```
-#### :balloon: Set Print Logo
+#### :balloon: Print Logo
 ```java
 EzSmartpeak.PrintLogo("jpg", Position.CENTER))
 ```
-#### :balloon: Set Print Barcode or QRCode
+#### :balloon: Print Barcode/QRCode
 ```java
 EzSmartpeak.PrintDimensionObject(Dimension.TWO, "100000000291339", 3, Position.CENTER, 1)); // print qrcode
 ```
