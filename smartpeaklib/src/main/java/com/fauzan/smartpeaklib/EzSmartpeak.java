@@ -73,7 +73,7 @@ public class EzSmartpeak {
     }
 
     public static JSONObject LineSplit() {
-        return PrintText("--------------------------------", 2, Position.CENTER, TextStyle.BOLD);
+        return PrintText("--------------------------------", 2, Position.CENTER);
     }
 
     public static JSONObject PrintLogo(String contentType, Position position) {
