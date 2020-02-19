@@ -24,7 +24,7 @@ allprojects {
 Step 2. Add the dependency
 ```java
 dependencies {
-        implementation 'com.github.muhdfauzan93:EzSmartpeak:<latest version>' // v1.0.1
+        implementation 'com.github.muhdfauzan93:EzSmartpeak:<latest version>' // v1.0.4
 }
 ```
 
@@ -59,7 +59,7 @@ EzSmartpeak.EmptySpace()
 ```
 Add line split
 ```java
-EzSmartpeak.LineSplit() // Result : =======================
+EzSmartpeak.LineSplit() // Result : ---------------------
 ```
 #### :balloon: Print Logo
 ```java
